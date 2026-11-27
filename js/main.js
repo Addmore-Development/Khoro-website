@@ -163,6 +163,13 @@
     });
   }
 
+  /* Never show broken-image alt text: fade failed images out and let the brand background show */
+  function failed(img){ img.classList.add('img-failed'); }
+  d.addEventListener('error', function (e) { if (e.target && e.target.tagName === 'IMG') failed(e.target); }, true);
+  window.addEventListener('load', function () {
+    d.querySelectorAll('img').forEach(function (im) { if (im.complete && im.naturalWidth === 0) failed(im); });
+  });
+
   /* Footer year */
   var y = d.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
 })();
